@@ -1,141 +1,78 @@
 ---
-import "../../styles/TemplatePage1.css";
+import fs from "fs";
+import path from "path";
 
 export async function getStaticPaths() {
-  return Array.from({ length: 1000 }, (_, i) => ({
-    params: { slug: String(i + 1) },
-  }));
+  const contentDir = path.resolve("src/content/pages");
+  const files = fs.readdirSync(contentDir);
+
+  const paths = files.map((file) => {
+    const slug = file.replace(".json", "");
+    return { params: { slug } };
+  });
+
+  return paths;
 }
 
 const { slug } = Astro.params;
+const filePath = path.resolve("src/content/pages", `${slug}.json`);
+
+if (!fs.existsSync(filePath)) {
+  const error = new Error(`Page with slug "${slug}" not found.`);
+  (error as any).status = 404;
+  throw error;
+}
+
+const pageData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Natural Recipe - Page {slug}</title>
+    <title>{pageData.metaTitle}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/TemplatePage1.css" />
   </head>
   <body>
     <main class="container">
       <section class="content">
         <div class="title_area">
-          <span class="span_advertisement">Advertisement</span>
-          <h1>Try This Easy Evening Trick for Prostate Comfort</h1>
+          <span class="span_advertisement">{pageData.advertisementText}</span>
+          <h1>{pageData.heading}</h1>
         </div>
 
-        <a
-          href="https://fun.pulseytfun.com/preclick?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-          class="video_area"
-        >
-          <img src="/presellimage.gif" alt="Video placeholder" />
+        <a href={pageData.ctaUrl} class="video_area">
+          <img src={pageData.videoImageSrc} alt="Video placeholder" />
         </a>
 
-        <a
-          href="https://fun.pulseytfun.com/preclick?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-          class="cta-button"
-        >
-          Click Here to Watch The Video
+        <a href={pageData.ctaUrl} class="cta-button">
+          {pageData.ctaText}
         </a>
 
-        <p>
-          If you're over 45, you might have noticed some changes in how you feel
-          as you age. For many men, the prostate naturally grows over
-          time—starting about the size of a walnut in your 20s and potentially
-          increasing as the years go by.
-        </p>
-        <p>
-          This can sometimes lead to discomfort, like that frequent “need to go”
-          feeling or occasional tiredness, which might affect your daily life.
-        </p>
-        <p>
-          Here's the good news! Experts have explored a simple, 21-second
-          evening routine inspired by Japanese traditions that may help support
-          prostate comfort and overall wellness.
-        </p>
-        <p>
-          Even better? It's something you can try at home using common, natural
-          ingredients you might already have on hand.
-        </p>
-        <p>
-          If you or someone you know is curious about gentle ways to care for
-          prostate health, click below to watch a short, free video featuring
-          Dr. Collins, who shares insights on this easy approach.
-        </p>
+        {pageData.paragraphs.map((paragraph: string) => <p>{paragraph}</p>)}
 
-        <a
-          href="https://fun.pulseytfun.com/preclick?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-          class="cta-button"
-        >
-          Click Here to Watch The Video
+        <a href={pageData.ctaUrl} class="cta-button">
+          {pageData.ctaText}
         </a>
       </section>
 
       <section class="copyright">
-        <p>Copyright 2025 by getflowempower.com. All rights reserved.</p>
-        <p>
-          This site is not a part of the YouTube website or YouTube Inc.
-          Additionally, this site is NOT endorsed by YouTube in any way. YOUTUBE
-          is a trademark of YOUTUBE, Inc.
-        </p>
-        <p>FDA Compliance:</p>
-        <p>
-          The information on this website has not been evaluated by the Food &
-          Drug Administration or any other medical body. We do not aim to
-          diagnose, treat, cure or prevent any illness or disease. Information
-          is shared for educational purposes only. You should always consult
-          your doctor before acting on any content on this website, especially
-          if you are pregnant, nursing, taking medication or have a medical
-          condition.
-        </p>
-        <p>
-          Results May Vary: The weight loss results testimonials are in no way a
-          guarantee of results. Individual weight loss results, including amount
-          and time, will vary. Whether genetic or environmental, it should be
-          noted that food intake, rates of metabolism and levels of exercise and
-          physical exertion vary from person to person. This means weight loss
-          results will also vary from person to person.
-        </p>
-        <p>
-          Some names and personal identifying information on this site have been
-          changed to protect the privacy of individuals. No individual result
-          should be seen as typical.
-        </p>
-        <p>
-          Marketing Disclosure: This website is a marketplace. As such, you
-          should know that the owner has a monetary connection to the product
-          and services advertised on the site. The owner receives payment
-          whenever a qualified lead is referred, but that is the extent of it.
-        </p>
-        <p>
-          Advertising Disclosure: This website and the products & services
-          referred to on the site are advertising marketplaces. This website is
-          an advertisement and not a news publication. Any photographs of
-          persons used on this site are models. The owner of this site and of
-          the products and services referred to on this site only provides a
-          service where consumers can obtain and compare.
-        </p>
+        {pageData.footerParagraphs.map((text: string) => <p>{text}</p>)}
       </section>
 
       <footer class="footer">
         <div class="footer_nav">
-          <a
-            href="https://getflowempower.com/shipping?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-            >Shipping</a
-          >
-          <a
-            href="https://getflowempower.com/shipping?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-            >Contact</a
-          >
-          <a
-            href="https://getflowempower.com/shipping?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-            >Privacy Policy</a
-          >
-          <a
-            href="https://getflowempower.com/shipping?cmpid=67f7c3d6b760c2e063d74673&utm_campaign=&sub2=&sub3=&sub4=281655653257607&sub5=745273520608&sub6=281497399484329&sub7=c&sub8=&sub9=&sub10=&utm_source=Google&wbraid=&gbraid=&utm_medium=&utm_content=&ref_id="
-            >Terms Of Service</a
-          >
+          {
+            pageData.footerLinks.map(
+              (link: { label: string; href: string }) => (
+                <a href={link.href}>{link.label}</a>
+              )
+            )
+          }
         </div>
       </footer>
     </main>
