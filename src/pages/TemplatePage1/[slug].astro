@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 export async function getStaticPaths() {
-  const contentDir = path.resolve("src/content/pages");
+  const contentDir = path.resolve("content/pages/template1");
   const files = fs.readdirSync(contentDir);
 
   const paths = files.map((file) => {
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const filePath = path.resolve("src/content/pages", `${slug}.json`);
+const filePath = path.resolve("content/pages/template1", `${slug}.json`);
 
 if (!fs.existsSync(filePath)) {
   const error = new Error(`Page with slug "${slug}" not found.`);
