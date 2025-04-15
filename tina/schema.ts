@@ -41,18 +41,12 @@ const template1: Collection = {
       name: "paragraphs",
       label: "Paragraphs",
       list: true,
-      ui: {
-        component: "textarea",
-      },
     },
     {
       type: "string",
       name: "footerParagraphs",
       label: "Footer Paragraphs",
       list: true,
-      ui: {
-        component: "textarea",
-      },
     },
     {
       type: "object",
@@ -104,18 +98,12 @@ const template2: Collection = {
       name: "referencesLeft",
       label: "Scientific References (Left Column)",
       list: true,
-      ui: {
-        component: "textarea",
-      },
     },
     {
       type: "string",
       name: "referencesRight",
       label: "Scientific References (Right Column)",
       list: true,
-      ui: {
-        component: "textarea",
-      },
     },
     {
       type: "string",

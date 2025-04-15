@@ -1,0 +1,280 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background-color: rgba(234, 255, 240, 0.8);
+  color: rgba(50, 50, 50, 1);
+}
+
+.navbar {
+  background-color: #00a63e;
+  color: rgba(245, 254, 247, 1);
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  color: rgba(245, 254, 247, 1);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: rgba(245, 254, 247, 1);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: rgba(245, 254, 247, 1);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.menu-toggle i {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  position: absolute;
+  top: 65%;
+  transform: translate(-50%, -50%);
+}
+
+.icon-bars {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.icon-close {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+#iconContainer {
+  position: relative;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#iconContainer.open .icon-bars {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+#iconContainer.open .icon-close {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #00a63e;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0 1.5rem;
+  z-index: 10;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.dropdown-menu a {
+  color: rgba(245, 254, 247, 1);
+  text-decoration: none;
+  padding: 0.75rem 0;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  color: rgba(245, 254, 247, 0.7);
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu.active {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad_content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+}
+
+.ad_content img {
+  width: 100%;
+}
+
+.ad_content h1 {
+  text-align: center;
+}
+
+.title_area {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.9rem 1.5rem;
+  background-color: #00a63e;
+  color: rgba(245, 254, 247, 1);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.cta-button:hover {
+  background-color: #008235;
+}
+
+.description_content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.desc_area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3rem;
+}
+
+.description_content p {
+  text-align: justify;
+}
+
+.desc_button_area {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.copyright {
+  width: 100%;
+  font-size: 1rem;
+  text-align: center;
+  color: rgba(50, 50, 50, 0.7);
+  background-color: rgba(234, 255, 240, 1);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: -2rem;
+}
+
+.copyright p {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer {
+  padding: 2rem;
+}
+
+.footer_nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer a {
+  text-decoration: none;
+  color: rgba(50, 50, 50, 0.7);
+}
+
+.footer a:hover {
+  color: rgba(50, 50, 50, 1);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .ad_content {
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: -2rem;
+  }
+
+  .desc_area {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .copyright {
+    margin-top: -2rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .cta-button {
+    font-size: 0.9rem;
+  }
+}

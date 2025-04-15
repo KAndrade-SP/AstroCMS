@@ -1,0 +1,147 @@
+---
+import fs from "fs";
+import path from "path";
+
+export async function getStaticPaths() {
+  const contentDir = path.resolve("content/pages/template1");
+  const files = fs.readdirSync(contentDir);
+
+  const paths = files.map((file) => {
+    const slug = file.replace(".json", "");
+    return { params: { slug } };
+  });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const filePath = path.resolve("content/pages/template1", `${slug}.json`);
+
+if (!fs.existsSync(filePath)) {
+  const error = new Error(`Page with slug "${slug}" not found.`);
+  (error as any).status = 404;
+  throw error;
+}
+
+const pageData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+const icons = [
+  "fa-solid fa-circle-exclamation fa-2xl",
+  "fa-solid fa-person-rays fa-2xl",
+  "fa-solid fa-face-smile fa-2xl",
+  "fa-solid fa-leaf fa-2xl",
+  "fa-solid fa-notes-medical fa-2xl",
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageData.metaTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/styles/TemplatePage3.css" />
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const dropdownMenu = document.getElementById("dropdownMenu");
+      const iconContainer = document.getElementById("iconContainer");
+
+      if (menuToggle && dropdownMenu && iconContainer) {
+        menuToggle.addEventListener("click", () => {
+          dropdownMenu.classList.toggle("active");
+          iconContainer.classList.toggle("open");
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="navbar-container">
+        <div class="logo">
+          <a href="/">
+            <i class="fas fa-leaf"></i> YourHealth
+          </a>
+        </div>
+        <nav class="nav-links">
+          <a href="/">Home</a>
+          <a href="/shipping">Shipping</a>
+          <a href="/contact">Contact</a>
+          <a href="/about">About</a>
+        </nav>
+        <button class="menu-toggle" id="menuToggle">
+          <span id="iconContainer">
+            <i class="fas fa-bars icon-bars"></i>
+            <i class="fas fa-times icon-close"></i>
+          </span>
+        </button>
+      </div>
+
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="/">Home</a>
+        <a href="/shipping">Shipping</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="ad_content">
+        <a href={pageData.ctaUrl} class="video_area">
+          <img src={pageData.videoImageSrc} alt="Video placeholder" />
+        </a>
+
+        <div class="title_area">
+          <h1>{pageData.heading}</h1>
+          <span class="span_advertisement">{pageData.advertisementText}</span>
+
+          <a href={pageData.ctaUrl} class="cta-button">
+            {pageData.ctaText}
+          </a>
+        </div>
+      </section>
+
+      <section class="description_content">
+        {
+          pageData.paragraphs.map((paragraph: string, i: number) => (
+            <div class="desc_area">
+              <i class={icons[i % icons.length]} />
+              <p>{paragraph}</p>
+            </div>
+          ))
+        }
+
+        <div class="desc_button_area">
+          <a href={pageData.ctaUrl} class="cta-button">
+            {pageData.ctaText}
+          </a>
+        </div>
+      </section>
+
+      <section class="copyright">
+        {pageData.footerParagraphs.map((text: string) => <p>{text}</p>)}
+      </section>
+
+      <footer class="footer">
+        <div class="footer_nav">
+          {
+            pageData.footerLinks.map(
+              (link: { label: string; href: string }) => (
+                <a href={link.href}>{link.label}</a>
+              )
+            )
+          }
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
