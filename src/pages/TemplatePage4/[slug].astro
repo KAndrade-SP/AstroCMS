@@ -1,0 +1,188 @@
+---
+import fs from "fs";
+import path from "path";
+
+export async function getStaticPaths() {
+  const contentDir = path.resolve("content/pages/template2");
+  const files = fs.readdirSync(contentDir);
+
+  const paths = files.map((file) => {
+    const slug = file.replace(".json", "");
+    return { params: { slug } };
+  });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const filePath = path.resolve("content/pages/template2", `${slug}.json`);
+
+if (!fs.existsSync(filePath)) {
+  const error = new Error(`Page with slug "${slug}" not found.`);
+  (error as any).status = 404;
+  throw error;
+}
+
+const pageData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+const leftCards = [
+  {
+    title: "Vitamins and Diabetes",
+    paragraphs: pageData.referencesLeft.slice(0, 4),
+  },
+  {
+    title: "Metabolic Health",
+    paragraphs: pageData.referencesLeft.slice(4, 8),
+  },
+];
+
+const rightCards = [
+  {
+    title: "Insulin Resistance",
+    paragraphs: pageData.referencesRight.slice(0, 4),
+  },
+  {
+    title: "Glycemic Control",
+    paragraphs: pageData.referencesRight.slice(4, 8),
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageData.metaTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/styles/TemplatePage4.css" />
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll(".reference-card");
+
+        cards.forEach((card) => {
+          const header = card.querySelector(".card-header");
+          header.addEventListener("click", () => {
+            card.classList.toggle("open");
+          });
+        });
+      });
+    </script></head
+  >
+
+  <body>
+    <header class="navbar">
+      <div class="navbar-container">
+        <div class="logo">
+          <a href="/">
+            YaleNews
+          </a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <section class="content-banner">
+        <div class="overlay">
+          <h1 class="content-title">{pageData.title}</h1>
+
+          <div class="video-wrapper">
+            <script type="text/javascript" id="scr_67864fb06e451dbbada28cc2">
+              var s = document.createElement("script");
+              (s.src =
+                "https://scripts.converteai.net/878e8e96-9e3c-48f1-96d9-9d726cef585a/players/67864fb06e451dbbada28cc2/player.js"),
+                (s.async = !0),
+                document.head.appendChild(s);
+            </script>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-references">
+        <h2>Scientific References:</h2>
+        <img
+          src={pageData.referencesImageSrc}
+          alt="Scientific References"
+          class="references-image"
+        />
+
+        <div class="references-lists">
+          <div class="reference-column left">
+            {
+              leftCards.map((card, index) => (
+                <div
+                  class="reference-card"
+                  data-index={index}
+                  data-column="left"
+                >
+                  <div class="card-header">
+                    <i class="fas fa-book-open card-icon" />
+                    <span class="card-title">{card.title}</span>
+                    <i class="fas fa-chevron-down toggle-icon" />
+                  </div>
+                  <div class="card-body">
+                    {card.paragraphs.map((p: string) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="reference-column right">
+            {
+              rightCards.map((card, index) => (
+                <div
+                  class="reference-card"
+                  data-index={index}
+                  data-column="right"
+                >
+                  <div class="card-header">
+                    <i class="fas fa-book-open card-icon" />
+                    <span class="card-title">{card.title}</span>
+                    <i class="fas fa-chevron-down toggle-icon" />
+                  </div>
+                  <div class="card-body">
+                    {card.paragraphs.map((p: string) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+
+        <ul class="foot-list">
+          {
+            pageData.footerLinks.map((link: string) => (
+              <li>
+                <a href="#" rel="noopener">
+                  {link}
+                </a>
+                |
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="foot-rights">
+          <span>All rights reserved.</span>
+          <p>{pageData.footerNotice1}</p>
+          <p>{pageData.footerNotice2}</p>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,243 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 235, 235, 1) 0%,
+    rgba(255, 225, 225, 1) 100%
+  );
+  color: rgba(50, 50, 50, 1);
+}
+
+.navbar {
+  background-color: rgba(245, 39, 39, 0.8);
+  color: rgba(245, 254, 247, 1);
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo a {
+  color: rgba(245, 254, 247, 1);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-banner {
+  text-align: center;
+  padding: 2rem 2rem 0 2rem;
+}
+
+.content-banner .overlay {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.content-title {
+  font-size: 1.7rem;
+}
+
+.video-wrapper {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 235, 235, 1) 0%,
+    rgba(255, 225, 225, 1) 100%
+  );
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 5px solid rgba(245, 39, 39, 0.8);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.video-wrapper:hover {
+  transform: scale(1.01);
+}
+
+.content-references {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 2rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.content-references h2 {
+  font-weight: 500;
+  color: rgba(50, 50, 50, 0.7);
+  font-size: 1.2rem;
+}
+
+.references-image {
+  width: 100%;
+}
+
+.references-lists {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.reference-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reference-card {
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid rgba(245, 39, 39, 0.8);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  background-color: rgba(255, 235, 235, 1);
+  font-weight: 500;
+  position: relative;
+}
+
+.card-header:hover {
+    background-color: rgba(255, 235, 235, 0.7);
+    transform: scale(1.01);
+}
+
+.card-icon {
+  color: rgba(245, 39, 39, 0.8);
+  font-size: 1.25rem;
+}
+
+.card-title {
+  flex: 1;
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+  color: rgba(50, 50, 50, 1);
+}
+
+.reference-card.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.card-body {
+  padding: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: max-height 0.4s ease;
+  background-color: rgba(255, 235, 235, 1);
+}
+
+.card-body p {
+  color: rgba(50, 50, 50, 0.8);
+}
+
+.reference-card.open .card-body {
+  max-height: 800px;
+  padding: 1rem;
+}
+
+.footer {
+  width: 100%;
+  background-color: rgba(20, 20, 20, 1);
+  color: rgba(245, 254, 247, 1);
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.foot-list {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 1rem;
+}
+
+.footer li {
+  list-style: none;
+}
+
+.footer a {
+  text-decoration: none;
+  margin-right: 0.25rem;
+  color: rgba(245, 254, 247, 1);
+}
+
+.footer a:hover {
+  color: rgba(245, 254, 247, 0.8);
+}
+
+.foot-rights {
+  max-width: 1040px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer span {
+  font-size: 15px;
+}
+
+.footer p {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .card-body p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1040px) {
+  .references-lists {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .card-body p {
+    font-size: 0.9rem;
+  }
+}
